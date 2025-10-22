@@ -1,5 +1,5 @@
-export type CatImageData = {
+export interface CatImageData {
   url: string;
   width: number;
   height: number;
-};
+}

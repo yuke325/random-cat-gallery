@@ -1,10 +1,10 @@
-// useStateはクライアントサイドの機能
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import { fetchCatImage } from "./fetch-image";
 import type { CatImageData } from "./types";
+import { Button } from "@/components/ui/button";
 
 // 画像を再度取得する関数
 export function CatImage({ url, width, height }: CatImageData) {
@@ -33,9 +33,9 @@ export function CatImage({ url, width, height }: CatImageData) {
 
   return (
     <div>
-      <button onClick={refreshimage} disabled={isLoading}>
+      <Button onClick={refreshimage} disabled={isLoading}>
         にゃんこ
-      </button>
+      </Button>
       {isLoading && <p>猫待ち...</p>}
       {!isLoading && imageData.url && (
         <Image
