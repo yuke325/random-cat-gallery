@@ -65,7 +65,12 @@ export function CatImage({ images }: { images: CatImageData[] }) {
         </Carousel>
       )}
       {error && <p className="text-5xl font-bold p-10 text-red-500">{error}</p>}
-      <Button onClick={refreshImages} disabled={isLoading} size="lg">
+      <Button
+        onClick={refreshImages}
+        disabled={isLoading}
+        size="lg"
+        className="text-background font-bold"
+      >
         新しいにゃんこ
       </Button>
     </div>
