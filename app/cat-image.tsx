@@ -2,27 +2,30 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { fetchCatImage } from "./fetch-image";
+import { fetchCatImages } from "./fetch-image";
 import type { CatImageData } from "./types";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
-// 画像を再度取得する関数
-export function CatImage({ url, width, height }: CatImageData) {
-  const [imageData, setImageData] = useState<CatImageData>({
-    url,
-    width,
-    height,
-  });
+export function CatImage({ images }: { images: CatImageData[] }) {
+  const [imageData, setImageData] = useState<CatImageData[]>(images);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const refreshimage = async () => {
+  const refreshImages = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const catImage = await fetchCatImage();
-      setImageData(catImage);
+      const catImages = await fetchCatImages(5);
+      setImageData(catImages);
     } catch (err) {
       setError("猫ちゃんは来なかった...");
       console.error("画像取得エラー:", err);
@@ -32,24 +35,38 @@ export function CatImage({ url, width, height }: CatImageData) {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center gap-4 p-20">
+    <div className="min-h-screen flex flex-col items-center gap-2 pt-4 px-4">
       {isLoading && (
-        <p className="text-5xl font-bold text-primary">にゃんこ待ち...</p>
+        <p className="text-5xl font-bold text-primary p-40">にゃんこ待ち...</p>
       )}
-      {!isLoading && imageData.url && (
-        <div className="p-1 rounded-xl bg-gradient-to-br from-primary to-foreground">
-          <Image
-            src={imageData.url}
-            alt="random-cat"
-            width={imageData.width}
-            height={imageData.height}
-            className="object-contain max-h-[70vh] max-w-full rounded-xl"
-          />
-        </div>
+      {!isLoading && imageData.length > 0 && (
+        <Carousel className="w-[80vh]">
+          <CarouselContent>
+            {imageData.map((image, index) => (
+              <CarouselItem key={`${image.url}-${index}`}>
+                <div>
+                  <Card>
+                    <CardContent className="flex items-center justify-center p-2 h-[60vh]">
+                      <Image
+                        src={image.url}
+                        alt={`random-cat-${index + 1}`}
+                        width={image.width}
+                        height={image.height}
+                        className="object-contain w-full h-full"
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       )}
-      {error && <p>{error}</p>}
-      <Button onClick={refreshimage} disabled={isLoading}>
-        にゃんこ
+      {error && <p className="text-5xl font-bold p-10 text-red-500">{error}</p>}
+      <Button onClick={refreshImages} disabled={isLoading} size="lg">
+        新しいにゃんこ
       </Button>
     </div>
   );
