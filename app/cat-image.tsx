@@ -32,20 +32,25 @@ export function CatImage({ url, width, height }: CatImageData) {
   };
 
   return (
-    <div>
+    <div className="h-screen flex flex-col items-center gap-4 p-20">
+      {isLoading && (
+        <p className="text-5xl font-bold text-primary">にゃんこ待ち...</p>
+      )}
+      {!isLoading && imageData.url && (
+        <div className="p-1 rounded-xl bg-gradient-to-br from-primary to-foreground">
+          <Image
+            src={imageData.url}
+            alt="random-cat"
+            width={imageData.width}
+            height={imageData.height}
+            className="object-contain max-h-[70vh] max-w-full rounded-xl"
+          />
+        </div>
+      )}
+      {error && <p>{error}</p>}
       <Button onClick={refreshimage} disabled={isLoading}>
         にゃんこ
       </Button>
-      {isLoading && <p>猫待ち...</p>}
-      {!isLoading && imageData.url && (
-        <Image
-          src={imageData.url}
-          alt="random-cat"
-          width={imageData.width}
-          height={imageData.height}
-        />
-      )}
-      {error && <p>{error}</p>}
     </div>
   );
 }
