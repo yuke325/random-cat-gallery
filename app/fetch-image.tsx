@@ -4,11 +4,9 @@ import type { CatImageData } from "./types";
 import { CAT_API_KEY } from "./env";
 
 // APIから画像を取得する関数
-export async function fetchCatImages(
-  count: number = 5,
-): Promise<CatImageData[]> {
+export async function fetchCatImages(): Promise<CatImageData[]> {
   const res = await fetch(
-    `https://api.thecatapi.com/v1/images/search?limit=${count}`,
+    "https://api.thecatapi.com/v1/images/search?limit=10",
     {
       headers: { "x-api-key": CAT_API_KEY },
     },

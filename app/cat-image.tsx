@@ -24,7 +24,7 @@ export function CatImage({ images }: { images: CatImageData[] }) {
     setError(null);
 
     try {
-      const catImages = await fetchCatImages(5);
+      const catImages = await fetchCatImages();
       setImageData(catImages);
     } catch (err) {
       setError("猫ちゃんは来なかった...");
@@ -35,7 +35,7 @@ export function CatImage({ images }: { images: CatImageData[] }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center gap-2 pt-4 px-4">
+    <div className="flex flex-col items-center gap-2 pt-4 px-4">
       {isLoading && (
         <p className="text-5xl font-bold text-primary p-40">にゃんこ待ち...</p>
       )}
@@ -52,6 +52,7 @@ export function CatImage({ images }: { images: CatImageData[] }) {
                         alt={`random-cat-${index + 1}`}
                         width={image.width}
                         height={image.height}
+                        priority={true}
                         className="object-contain w-full h-full"
                       />
                     </CardContent>

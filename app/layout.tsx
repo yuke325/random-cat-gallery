@@ -3,12 +3,13 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ScrollCatBackground } from "@/components/scroll-cat-background";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ランダム猫",
+  title: "Random Cat Generator",
   description: "Generated cat images",
 };
 
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className="relative z-10 flex flex-col">
             <Header />
             <main className="flex-1">{children}</main>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>

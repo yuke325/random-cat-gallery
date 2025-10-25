@@ -6,8 +6,8 @@ import RotatingText from "@/components/RotatingText";
 
 export const Header = () => {
   return (
-    <div className="py-8 px-10 flex items-center justify-between">
-      <div className="font-bold text-5xl flex items-center gap-x-2">
+    <header className="py-8 px-10 flex items-center justify-between">
+      <a href="./" className="font-bold text-5xl flex items-center gap-x-2">
         <div className="text-primary">らんだむ</div>
         <RotatingText
           texts={["にゃんこ", "ねこ", "きゃっと"]}
@@ -21,10 +21,10 @@ export const Header = () => {
           transition={{ type: "spring", damping: 30, stiffness: 400 }}
           rotationInterval={2000}
         />
-      </div>
+      </a>
       <div className="flex items-center">
         <ModeToggle />
       </div>
-    </div>
+    </header>
   );
 };
